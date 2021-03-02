@@ -3,16 +3,19 @@
 *	@date
 *	@file
 *	@brief
+
 */
 #include "Board.h"
 #include "Executive.h"
 #include "Ships.h"
+#include "Ai.h"
 #include <string>
 #include <iostream>
 #include <chrono>
 #include <thread>
 Executive::Executive()
 {
+  Ai ai1;
 	p1Carrier.buildShip(6);
 	p2Carrier.buildShip(6);
 	p1BattleShip.buildShip(5);

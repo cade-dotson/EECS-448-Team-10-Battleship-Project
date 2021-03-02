@@ -5,6 +5,7 @@
 #include <string>
 #include "Board.h"
 #include "Ships.h"
+#include "Ai.h"
 
 class Executive
 {
