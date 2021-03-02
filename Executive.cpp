@@ -33,6 +33,10 @@ void Executive::run()
 	Game();
 }
 
+
+
+
+
 void Executive::PrintMenu()
 {
 	bool loop = true;
@@ -42,15 +46,30 @@ void Executive::PrintMenu()
 	while (loop)
 	{
 		cout << endl << "Enter in number to navigate menu" << endl;
-		cout << "1: Start Game" << endl;
-		cout << "2: How to Play" << endl;
+		cout << "1: Play a Friend" << endl;
+		cout << "2: Play Against Computer" << endl;
+		cout << "3: How to Play" << endl;
 		cin >> selection;
+
+		//handles bad input
+		while (cin.fail() || selection < 1 || selection > 3)
+		{
+			cout << "Not a valid choice, try again." << endl;
+			cin.clear();
+			cin.ignore(1000, '\n');
+			cin >> selection;
+		}
+
 		switch (selection)
 		{
 		case 1:
 			loop = false;
 			break;
 		case 2:
+			selectDifficulty();
+			loop = false;
+			break;
+		case 3:
 			cout << "BASIC RULES" << endl << endl;
 			cout << "The goal of the game is to eliminate all of your opponent's ships ";
 			cout << "by selecting spots on the game board to see if you hit or miss." << endl;
@@ -72,14 +91,13 @@ void Executive::PrintMenu()
 
 			break;
 		default:
-			cout << selection << " is not a valid choice, try again." << endl;
+			cout << selection << "Not a valid choice, try again." << endl;
 		}
 	}
 }
 
 void Executive::Game()
 {
-	int numberOfShips = 0;
 	int row;
 	char column;
 	int vert;
@@ -99,173 +117,16 @@ void Executive::Game()
 
 	cout << "Enter the number of ships you would like to play with, up to a total of 6." << endl;
 	cin >> numberOfShips;
-	cout << "HIDE THE SCREEN SO ONLY ONE PLAYER CAN SEE IT" << endl;
+	cout << "IF PLAYING AGAINST A HUMAN, HIDE THE SCREEN SO ONLY ONE PLAYER CAN SEE IT" << endl;
 	cout << "PLAYER 1" << endl;
-	for (int i = 0; i < numberOfShips; i++)
-	{
-		cout << "Enter in the position of where you would like to place your 1x" << i + 1 << " ship." << endl;
-		cout << "Columns are labeled A-J, and rows are 1-10" << endl;
-		cout << "Enter in the row value." << endl;
-		cin >> row;
-		while (row < 1 || row > 10)
-		{
-			cout << "Not a valid row position, try again." << endl;
-			cin.clear();
-			cin.ignore(1000, '\n');
-			cin >> row;
-		}
-		cout << "Enter in the column value." << endl;
-		cin >> column;
-		while (column < 'A' || column > 'J')
-		{
-			cout << "Not a valid column position, try again." << endl;
-			cin.clear();
-			cin.ignore(1000, '\n');
-			cin >> column;
-		}
-		int trueColumn = 0;
-		if (column == 'A')
-		{
-			trueColumn = 1;
-		}
-		else if (column == 'B')
-		{
-			trueColumn = 2;
-		}
-		else if (column == 'C')
-		{
-			trueColumn = 3;
-		}
-		else if (column == 'D')
-		{
-			trueColumn = 4;
-		}
-		else if (column == 'E')
-		{
-			trueColumn = 5;
-		}
-		else if (column == 'F')
-		{
-			trueColumn = 6;
-		}
-		else if (column == 'G')
-		{
-			trueColumn = 7;
-		}
-		else if (column == 'H')
-		{
-			trueColumn = 8;
-		}
-		else if (column == 'I')
-		{
-			trueColumn = 9;
-		}
-		else if (column == 'J')
-		{
-			trueColumn = 10;
-		}
-		cout << "Enter a 1 if you want the ship to be oriented vertically, 0 for horizontal." << endl;
-		cin >> vert;
-		while (cin.fail() || vert > 1 || vert < 0)
-		{
-			cout << "Not a valid orientation, try again." << endl;
-			cin.clear();
-			cin.ignore(1000, '\n');
-			cin >> vert;
-		}
-
-		if ((p1Ships.addShip(row, trueColumn, vert, i + 1, i)) == false)
-		{
-			cout << "SHIP WAS UNABLE TO BE ADDED, TRY AGAIN." << endl;
-			i--;
-		}
-		p1Ships.Display();
-		//std::this_thread::sleep_for(7s);
-	}
-	p1Ships.clearScreen();
+	//placeships
+	placeShips(1);
 	cout << "SWITCH PLAYERS" << endl;
-	cout << "PLAYER 2" << endl;
-	for (int i = 0; i < numberOfShips; i++)
-	{
-		cout << "Enter in the position of where you would like to place your 1x" << i + 1 << " ship." << endl;
-		cout << "Columns are labeled A-J, and rows are 1-10" << endl;
-		cout << "Enter in the row value." << endl;
-		cin >> row;
-		while (row < 1 || row > 10)
-		{
-			cout << "Not a valid row position, try again." << endl;
-			cin.clear();
-			cin.ignore(1000, '\n');
-			cin >> row;
-		}
-		cout << "Enter in the column value." << endl;
-		cin >> column;
-		while (column < 'A' || column > 'J')
-		{
-			cout << "Not a valid column position, try again." << endl;
-			cin.clear();
-			cin.ignore(1000, '\n');
-			cin >> column;
-		}
-		int trueColumn = 0;
-		if (column == 'A')
-		{
-			trueColumn = 1;
-		}
-		else if (column == 'B')
-		{
-			trueColumn = 2;
-		}
-		else if (column == 'C')
-		{
-			trueColumn = 3;
-		}
-		else if (column == 'D')
-		{
-			trueColumn = 4;
-		}
-		else if (column == 'E')
-		{
-			trueColumn = 5;
-		}
-		else if (column == 'F')
-		{
-			trueColumn = 6;
-		}
-		else if (column == 'G')
-		{
-			trueColumn = 7;
-		}
-		else if (column == 'H')
-		{
-			trueColumn = 8;
-		}
-		else if (column == 'I')
-		{
-			trueColumn = 9;
-		}
-		else if (column == 'J')
-		{
-			trueColumn = 10;
-		}
-		cout << "Enter a 1 if you want the ship to be oriented vertically, 0 for horizontal." << endl;
-		cin >> vert;
-		while (cin.fail() || vert > 1 || vert < 0)
-		{
-			cout << "Not a valid orientation, try again." << endl;
-			cin.clear();
-			cin.ignore(1000, '\n');
-			cin >> vert;
-		}
-		if ((p2Ships.addShip(row, trueColumn, vert, i + 1, i)) == false)
-		{
-			cout << "SHIP WAS UNABLE TO BE ADDED, TRY AGAIN." << endl;
-			i--;
-		}
-		p2Ships.Display();
-		//std::this_thread::sleep_for(7s);
-	}
-	p2Ships.clearScreen();
+	placeShips(2);
+
+
+
+
 	cout << "Great, both players' boats have now been placed on the board. Now, it is time to attack the enemy!";
 	cout << endl << endl;
 
@@ -494,6 +355,7 @@ void Executive::Game()
 		if (totalDestroyed1 == numberOfShips)
 		{
 			winner = true;
+			break;
 		}
 
 		cout << "PLAYER 2 TURN [" << turn << "]";
@@ -706,6 +568,7 @@ void Executive::Game()
 		if (totalDestroyed2 == numberOfShips)
 		{
 			winner = true;
+			break;
 		}
 		//std::this_thread::sleep_for(7s);
 		turn++;
@@ -729,6 +592,133 @@ void Executive::Game()
 	}
 }
 
+
+
+void Executive::placeShips(int player){//wasn't able to get pointers to work for the playerBoards
+	int row;
+	char column;
+	int vert;
+	for (int i = 0; i < numberOfShips; i++)
+	{
+		cout << "Enter in the position of where you would like to place your 1x" << i + 1 << " ship." << endl;
+		cout << "Columns are labeled A-J, and rows are 1-10" << endl;
+		cout << "Enter in the row value." << endl;
+		cin >> row;
+		while (row < 1 || row > 10)
+		{
+			cout << "Not a valid row position, try again." << endl;
+			cin.clear();
+			cin.ignore(1000, '\n');
+			cin >> row;
+		}
+		cout << "Enter in the column value." << endl;
+		cin >> column;
+		while (column < 'A' || column > 'J')
+		{
+			cout << "Not a valid column position, try again." << endl;
+			cin.clear();
+			cin.ignore(1000, '\n');
+			cin >> column;
+		}
+		int trueColumn = 0;
+		if (column == 'A')
+		{
+			trueColumn = 1;
+		}
+		else if (column == 'B')
+		{
+			trueColumn = 2;
+		}
+		else if (column == 'C')
+		{
+			trueColumn = 3;
+		}
+		else if (column == 'D')
+		{
+			trueColumn = 4;
+		}
+		else if (column == 'E')
+		{
+			trueColumn = 5;
+		}
+		else if (column == 'F')
+		{
+			trueColumn = 6;
+		}
+		else if (column == 'G')
+		{
+			trueColumn = 7;
+		}
+		else if (column == 'H')
+		{
+			trueColumn = 8;
+		}
+		else if (column == 'I')
+		{
+			trueColumn = 9;
+		}
+		else if (column == 'J')
+		{
+			trueColumn = 10;
+		}
+		cout << "Enter a 1 if you want the ship to be oriented vertically, 0 for horizontal." << endl;
+		cin >> vert;
+		while (cin.fail() || vert > 1 || vert < 0)
+		{
+			cout << "Not a valid orientation, try again." << endl;
+			cin.clear();
+			cin.ignore(1000, '\n');
+			cin >> vert;
+		}
+		if(player==1){
+			if ((p1Ships.addShip(row, trueColumn, vert, i + 1, i)) == false)
+			{
+				cout << "SHIP WAS UNABLE TO BE ADDED, TRY AGAIN." << endl;
+				i--;
+			}
+			p1Ships.Display();
+		}else if(player==2){
+			if ((p2Ships.addShip(row, trueColumn, vert, i + 1, i)) == false)
+			{
+				cout << "SHIP WAS UNABLE TO BE ADDED, TRY AGAIN." << endl;
+				i--;
+			}
+			p2Ships.Display();
+		}
+		//std::this_thread::sleep_for(7s);
+	}
+	p1Ships.clearScreen();//doesn't matter what ship this is called from
+}
+
+void Executive::selectDifficulty(){
+	cout << "Select a difficulty for the computer player:" << endl;
+	cout << "1. Easy" << endl;
+	cout << "2. Medium" << endl;
+	cout << "3. Hard" << endl;
+	int difficulty = 0;
+	cin >> difficulty;
+	//handles bad input
+	while (cin.fail() || difficulty < 1 || difficulty > 3)
+	{
+		cout << "Not a valid choice, try again." << endl;
+		cin.clear();
+		cin.ignore(1000, '\n');
+		cin >> difficulty;
+	}
+	switch(difficulty){
+		case 1:
+			cout << "Playing easy" << endl;
+			break;
+		case 2:
+			cout << "Playing medium" << endl;
+			break;
+		case 3:
+			break;
+			cout << "Playing Hard" << endl;
+		default:
+			cout << "Not a valid choice, try again." << endl;
+	}
+}
 
 Executive::~Executive()
 {
