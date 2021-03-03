@@ -13,7 +13,7 @@ Ships.o: Ships.cpp Ships.h
 Board.o: Board.cpp Board.h
 	g++ -std=gnu++11 -g -Wall -c Board.cpp
 
-Ai.o: Ai.cpp Ai.h
+Ai.o: Ai.cpp Ai.h Board.cpp Board.h
 	g++ -std=gnu++11 -g -Wall -c Ai.cpp
 
 clean:

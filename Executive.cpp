@@ -15,7 +15,7 @@
 #include <thread>
 Executive::Executive()
 {
-  Ai ai1;
+  //Ai ai1;
 	p1Carrier.buildShip(6);
 	p2Carrier.buildShip(6);
 	p1BattleShip.buildShip(5);
@@ -69,7 +69,8 @@ void Executive::PrintMenu()
 			loop = false;
 			break;
 		case 2:
-			selectDifficulty();
+		        aiPlayer = true;
+		        selectDifficulty();
 			loop = false;
 			break;
 		case 3:
@@ -123,9 +124,14 @@ void Executive::Game()
 	cout << "IF PLAYING AGAINST A HUMAN, HIDE THE SCREEN SO ONLY ONE PLAYER CAN SEE IT" << endl;
 	cout << "PLAYER 1" << endl;
 	//placeships
+
 	placeShips(1);
-	cout << "SWITCH PLAYERS" << endl;
-	placeShips(2);
+	if(!aiPlayer){
+	  cout << "SWITCH PLAYERS" << endl;
+	  placeShips(2);
+	}
+	
+	
 
 
 
@@ -223,7 +229,7 @@ void Executive::Game()
 		{
 			trueColumn = 10;
 		}
-		string spot = p2Ships.checkHit(row, trueColumn);
+		string spot = p2Ships.checkHit(row, trueColumn);//it won't matter if you pass a copy for this
 		if (spot != ".")
 		{
 			cout << "HIT!";
@@ -711,12 +717,15 @@ void Executive::selectDifficulty(){
 	switch(difficulty){
 		case 1:
 			cout << "Playing easy" << endl;
+			aiDifficulty = 0;
 			break;
 		case 2:
 			cout << "Playing medium" << endl;
+			aiDifficulty = 1;
 			break;
 		case 3:
 			break;
+			aiDifficulty = 2;
 			cout << "Playing Hard" << endl;
 		default:
 			cout << "Not a valid choice, try again." << endl;

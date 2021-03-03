@@ -25,7 +25,8 @@ public:
 
 private:
 
-
+    bool aiPlayer = false;//false when no ai, true when there is an ai playing
+    int aiDifficulty = 0; //0 - easy, 1 - medium, 2 - hard
 
 /// Outputs a choice for instructions for the game
 /** Main Menu fuction for the Game, Show a intro screen and how to play with the rules.
